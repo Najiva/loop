@@ -33,14 +33,6 @@
                 "n": 30,
                 "p": 3728
             }
-        ],
-        "stats" : {
-            "current": {
-                "totalInterests": -1
-            },
-            "optimized": {
-                "totalInterests": -1
-            }
-        }
+        ]
     }
 }

@@ -38,13 +38,20 @@ def interests(payment, duration, principal):
 def analyzeLoans(data):
     loans = data['loans']
     totalInterests = 0
+    stats = {
+        'current': {
+        },
+        'optimized': {
+        }
+    }
     for p in loans:
         payment = monthly(p['ir'], p['n'], p['p'])
         p['monthly'] = payment
         p['cost'] = interests(payment, p['n'], p['p'])
         p['rentRate'] = p['cost'] / p['p']
         totalInterests += p['cost']
-    data['stats']['current']['totalInterests'] = totalInterests
+    stats['current']['totalInterests'] = totalInterests
+    data['stats'] = stats
     # Sort loans based on the rentRate
     loans.sort(reverse=True, key=rate)
 

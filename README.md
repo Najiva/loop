@@ -1,5 +1,5 @@
 # loop
-Simple python program to help prioritize loans repayments
+Simple python program to help prioritize loans repayments.
 
 # Problem
 
@@ -12,13 +12,37 @@ in a specific order.
 # Solution
 Based on the amount of the extra capital it's iteratively calculated where and how much money should be put to what loan in order to pay off the loans as efficiently as possible.
 
-# Notes
+## Notes
  - program does not take inflation into consideration
  - it is assumed that extra payments to loans are for free
  - it is assumed that monthly payments will be the same after the extra payment i.e. duration of the loan will decrease
+ - there must be at least two loans
 
-# Usage
+## Usage
 
 The program takes data from the JSON file (data.json) and stores result in result.json.
 
-# Example
+## Example
+### data.json
+```json
+{
+    "data": {
+        "id": "John",
+        "extra": 7000,  // how much extra money do I have
+        "loans": [
+            {
+                "name": "auto",  // identifier of the loan
+                "ir": 0.049,  // annual interest rate
+                "n": 61,  // duration of the loan in months until the end
+                "p": 15063  // current principal
+            },
+            {
+                "name": "hypo",
+                "ir": 0.0159,
+                "n": 134,
+                "p": 22095
+            },
+        ]
+    }
+}
+```
