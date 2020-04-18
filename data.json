@@ -1,0 +1,46 @@
+{
+    "data": {
+        "id": "John",
+        "extra": 7000,
+        "loans": [
+            {
+                "name": "auto",
+                "ir": 0.049,
+                "n": 61,
+                "p": 15063
+            },
+            {
+                "name": "hypo",
+                "ir": 0.0159,
+                "n": 134,
+                "p": 22095
+            },
+            {
+                "name": "hypo2",
+                "ir": 0.0159,
+                "n": 126,
+                "p": 91900
+            },
+            {
+                "name": "po1",
+                "ir": 0.06,
+                "n": 62,
+                "p": 10347
+            },
+            {
+                "name": "po2",
+                "ir": 0.075,
+                "n": 30,
+                "p": 3728
+            }
+        ],
+        "stats" : {
+            "current": {
+                "totalInterests": -1
+            },
+            "optimized": {
+                "totalInterests": -1
+            }
+        }
+    }
+}
