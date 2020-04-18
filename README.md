@@ -1,5 +1,5 @@
 # loop
-Simple python program to help prioritize loans repayments.
+Simple python program to help prioritize loan repayments.
 
 # Problem
 
@@ -24,12 +24,12 @@ The program takes data from the JSON file (data.json) and stores result in resul
 
 ## Example
 
-Lets say John has spare 3700 Euro. For example, because he did not go for a vacation this year due to corona virus. He decdes to use the money to repay one of his loans. He has 2 loans.
+Let's say John has spare 3700 Euro. For example, because he did not go for a vacation this year due to coronavirus. He decides to use the money to repay one of his loans. He has 2 loans.
 
- 1. Loan for the car has current principal of 11,000 Euro, annual interest rate of 6 % and he has 62 monthly payments remaining.
- 2. Loan for the bike has current principal of 3,700 Euro, annual interest rate of 7.5 % and he has 30 months to go.
+ 1. Loan for a car has a current principal of 11,000 Euro, an annual interest rate of 6 % and he has 62 monthly payments remaining.
+ 2. Loan for a bike has a current principal of 3,700 Euro, an annual interest rate of 7.5 % and he has 30 months to go.
 
-The loan for the bike has higher interest rate, so he decides to pay it off, which will save him *370,-* Euro on interests during the period of 30 months. Now if he chooses to do the extra payment to the car loan he will be able to pay the car loan 2 years faster and will save him *1120,-* Euro over period of 39 months.
+The loan for the bike has a higher interest rate, so he decides to pay it off, which will save him *370,-* Euro on interests during the period of 30 months. Now if he chooses to do the extra payment to the car loan, he will be able to pay the car loan 2 years faster and will save him *1120,-* Euro over a period of 39 months.
 
 ### data.json
 ```json

@@ -29,7 +29,7 @@ def validate(data):
                 print("Each loan must have a current duration of the loan.")
                 result = False
             if not loan['p']:
-                print("Each loan must a current principal.")
+                print("Each loan must have a current principal.")
                 result = False
     except KeyError:
         print("Incorrect input json structure.")
