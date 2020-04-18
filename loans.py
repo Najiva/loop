@@ -11,11 +11,35 @@ def rate(loan):
         return -1
 
 
+def validate(data):
+    result = True
+    loans = data['loans']
+    try:
+        if len(loans) < 2:
+            print("Input data validation failed. There must be at least two loans.")
+            result = False
+        for loan in loans:
+            if not loan['name']:
+                print("Each loan must have a name.")
+                result = False
+            if not loan['ir']:
+                print("Each loan must have an interest rate.")
+                result = False
+            if not loan['n']:
+                print("Each loan must have a current duration of the loan.")
+                result = False
+            if not loan['p']:
+                print("Each loan must a current principal.")
+                result = False
+    except KeyError:
+        print("Incorrect input json structure.")
+        result = False
+    return result
+
+
 def loadLoans():
     with open('data.json') as json_file:
         data = json.load(json_file)
-        # TODO validate data
-        # 1. There are at least two loans
         return data['data']
 
 
@@ -27,6 +51,7 @@ def dumpLoans(data):
 def monthly(ir, duration, principal):
     val = abs(np.pmt(ir / 12, duration, principal))
     return val
+
 
 def interests(payment, duration, principal):
     cost = payment * duration - principal
@@ -110,78 +135,32 @@ def main():
     ITERATIONS = 100
 
     data = loadLoans()
+    if validate(data):
+        analyzeLoans(data)
 
-    analyzeLoans(data)
+        # Optimization
+        minrr = data['loans'][-1]['rentRate']
+        maxrr = data['loans'][0]['rentRate']
+        rr = (minrr + maxrr) / 2
+        needed = 0.0
+        for i in range(1, ITERATIONS):
+            needed = optimize(rr, data)
+            if needed < data['extra']:
+                maxrr = rr
+                rr = (rr + minrr) / 2
+            else:
+                minrr = rr
+                rr = (rr + maxrr) / 2
 
-    # Optimization
-    minrr = data['loans'][-1]['rentRate']
-    maxrr = data['loans'][0]['rentRate']
-    rr = (minrr + maxrr) / 2
-    needed = 0.0
-    for i in range(1, ITERATIONS):
-        needed = optimize(rr, data)
-        if needed < data['extra']:
-            maxrr = rr
-            rr = (rr + minrr) / 2
-        else:
-            minrr = rr
-            rr = (rr + maxrr) / 2
-
-    dumpLoans(data)
+        dumpLoans(data)
+        return 0
+    else:
+        return -1
 
 
 if __name__ == "__main__":
     main()
 
-
-# for p in loans:
-#     x = []
-#     y = []
-#     for i in range(1, p['n'] + 1):
-#         x.append(i)
-#         monthlyPayment = np.pmt(p['ir'] / 12, i, p['p'])
-#         u = abs(monthlyPayment) * i - p['p']
-#         rentRate = u / p['p']
-#         y.append(rentRate)
-#         if i == p['n']:
-#             p['monthly'] = abs(monthlyPayment)
-#             p['cost'] = u
-#             p['rentRate'] = rentRate
-#             p['x'] = np.asarray(x, dtype=np.float32)
-#             p['y'] = np.asarray(y, dtype=np.float32)
-#     plt.plot(x, y, label=p['name'])
-
-# # Calculate new payment durations such that all loans will have the best rent rate
-# print("---------Loop method---------")
-# # What duration is best for me based on rentrate i can afford
-# # In this case rent rate of the best loan + 0.0469
-# targerRentRate = loans[-1]['rentRate'] + 0.013
-# print("Target rent rate: " + str(targerRentRate))
-# plt.axhline(y=targerRentRate, color='r', linestyle='-')
-# totalExtra = 0.0
-# for p in loans:
-#     print('+++' + p['name'] + '+++')
-#     p['bestDuration'] = np.interp(targerRentRate, p['y'], p['x'])
-#     # TODO what if the best duration is the same as original duration
-#     print("Best duration: " + str(p['bestDuration']))
-#     mir = 1.0 + (p['ir'] / 12)
-#     a = 1.0 - pow(mir, (-1.0) * p['bestDuration'])
-#     b = p['p'] / (1 - pow(mir, (-1.0) * p['n']))
-#     p['extraPayment'] = p['p'] - (a * b)
-#     p['newp'] = p['p'] - p['extraPayment']
-#     totalExtra += p['extraPayment']
-#     print("Extra payment for " + p['name'] + ": " + str(p['extraPayment']))
-# print("Total extra payments: " + str(totalExtra))
-
-# Now calculate new total interests paid
-# newTotalInterests = 0.0
-# for p in loans:
-#     monthlyPayment = np.pmt(p['ir'] / 12, p['bestDuration'], p['newp'])
-#     u = (abs(monthlyPayment) * p['bestDuration'] - p['newp'])
-#     newTotalInterests += u
-# print("Total interest after extra payments: " + str(newTotalInterests))
-# saving = data['stats']['current']['totalInterests'] - newTotalInterests
-# print("Saving interests: " + str(saving))
 
 # Now calculate if the extra payment went to pay for the biggest interest loan first
 # print("---------Avalanche method---------")
