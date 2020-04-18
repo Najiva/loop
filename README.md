@@ -1,16 +1,24 @@
 # loop
 Simple python program to help prioritize loans repayments
 
-# Description
+# Problem
 
-Different loans have different interestes and duration. Program prioritize repayments such that total interests payed is minimized. 
+Different loans have different interest rates and durations, therefore different returns for the banks.
+In situation where client has an extra capital and wonder what loan should be paid off first, in order to 
+minimize total interests paid, one usually go for the loan with the highest interest rate first. 
+However, there are situations when it would be better to split the capital and do the extra payment to multiple loans 
+in a specific order. 
 
- - First it calculates total cost of each euro borrowed for each loan
- - Then ...
+# Solution
+Based on the amount of capital its iteratively calculad where and how much money should be put to what loan.
 
 # Notes
- - Program does not take inflation into consideration, therefore you should not compare loans that have significant differences in duration of the loans e.g. mortgage and short term loans.
+ - program does not take inflation into consideration
+ - it is assumed that extra payments to loans are for free
+ - it is assumed that monthly payments will be the same after the extra payment i.e. duration of the loan will decrease
 
 # Usage
+
+Program takes data from the JSON file (data.json) and stores result into result.json.
 
 # Example
